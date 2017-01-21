@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private static final String REGISTER_URL = "URL for the API";
+    private static final String REGISTER_URL = "http://ethy.co.ke/Afya-Plan/api/register.php";
 
     private static final String KEY_FIRSTNAME = "firstname";
     private static final String KEY_LASTNAME = "lastname";
@@ -57,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String password;
     private String passwordConfirm;
 
+    private boolean isValid = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,8 @@ public class RegisterActivity extends AppCompatActivity {
         int viewID = view.getId();
 
         if(viewID == R.id.saveUserButton) {
+
+            Toast.makeText(RegisterActivity.this, "I am working!", Toast.LENGTH_SHORT).show();
             try {
 
                 if(!nationalIDEdit.getText().toString().isEmpty()) {
@@ -89,8 +93,9 @@ public class RegisterActivity extends AppCompatActivity {
                     password = passwordEdit.getText().toString();
                     passwordConfirm = passwordConfirmEdit.getText().toString();
 
-                    validateFields();
-                    registerUser();
+                    if(isValid) {
+                        registerUser();
+                    }
                 }
                 else {
                     nationalIDEdit.setText("");
@@ -129,6 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             //check that password confirm matches password
                                             if(password.equals(passwordConfirm)) {
                                                 Toast.makeText(RegisterActivity.this, "Hooray", Toast.LENGTH_SHORT).show();
+                                                isValid = true;
                                             }
                                             else {
                                                 passwordConfirmEdit.setText("");
@@ -186,14 +192,7 @@ public class RegisterActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response).getJSONObject("form");
-                            String site = jsonResponse.getString("site"),
-                                    network = jsonResponse.getString("network");
-                            System.out.println("Site: "+site+"\nNetwork: "+network);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        System.out.println(response);
                     }
                 },
                 new Response.ErrorListener() {
