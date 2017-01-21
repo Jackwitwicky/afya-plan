@@ -9,7 +9,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.afyaplan.afya_plan.com.savagelook.android.UrlJsonAsyncTask;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -19,10 +25,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private static final String REGISTER_USER_URL = "";
+    private static final String REGISTER_URL = "URL for the API";
+
+    private static final String KEY_FIRSTNAME = "firstname";
+    private static final String KEY_LASTNAME = "lastname";
+    private static final String KEY_PHONE = "phone";
+    private static final String KEY_IDNUMBER = "id";
+    private static final String KEY_DOB = "dob";
+    private static final String KEY_PASSWORD = "password";
 
     private EditText firstNameEdit;
     private EditText lastNameEdit;
@@ -36,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
     //values of edit texts
     private String firstName;
     private String lastName;
-    private int nationalID;
+    private String nationalID;
     private String phoneNumber;
     private String dob;
     private String password;
@@ -68,13 +83,14 @@ public class RegisterActivity extends AppCompatActivity {
                 if(!nationalIDEdit.getText().toString().isEmpty()) {
                     firstName = firstNameEdit.getText().toString();
                     lastName = lastNameEdit.getText().toString();
-                    nationalID = Integer.parseInt(nationalIDEdit.getText().toString());
+                    nationalID = nationalIDEdit.getText().toString();
                     phoneNumber = phoneNumberEdit.getText().toString();
                     dob = dobEdit.getText().toString();
                     password = passwordEdit.getText().toString();
                     passwordConfirm = passwordConfirmEdit.getText().toString();
 
                     validateFields();
+                    registerUser();
                 }
                 else {
                     nationalIDEdit.setText("");
@@ -100,41 +116,47 @@ public class RegisterActivity extends AppCompatActivity {
                 //check that last name is okay
                 if(!lastName.isEmpty() && lastName != null) {
                     if(lastName.matches(".*\\\\d+.*")) {
-                        //check that phone number is okay
-                        if(!phoneNumber.isEmpty() && phoneNumber != null) {
-                            if(phoneNumber.matches("[0-9]+")) {
-                                if(phoneNumber.length() == 10) {
-                                    //check that dob is okay
+                        //check that national id is a number
+                        if(nationalID.matches("[0-9]+")) {
+                            //check that phone number is okay
+                            if(!phoneNumber.isEmpty() && phoneNumber != null) {
+                                if(phoneNumber.matches("[0-9]+")) {
+                                    if(phoneNumber.length() == 10) {
+                                        //check that dob is okay
 
-                                    //check that password is okay
-                                    if (!password.isEmpty() && password != null) {
-                                        //check that password confirm matches password
-                                        if(password.equals(passwordConfirm)) {
-                                            Toast.makeText(RegisterActivity.this, "Hooray", Toast.LENGTH_SHORT).show();
+                                        //check that password is okay
+                                        if (!password.isEmpty() && password != null) {
+                                            //check that password confirm matches password
+                                            if(password.equals(passwordConfirm)) {
+                                                Toast.makeText(RegisterActivity.this, "Hooray", Toast.LENGTH_SHORT).show();
+                                            }
+                                            else {
+                                                passwordConfirmEdit.setText("");
+                                                Toast.makeText(RegisterActivity.this, "The two passwords do no match", Toast.LENGTH_SHORT).show();
+                                            }
                                         }
                                         else {
-                                            passwordConfirmEdit.setText("");
-                                            Toast.makeText(RegisterActivity.this, "The two passwords do no match", Toast.LENGTH_SHORT).show();
+                                            passwordEdit.setText("");
+                                            Toast.makeText(RegisterActivity.this, "Your password cannot be empty", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                     else {
-                                        passwordEdit.setText("");
-                                        Toast.makeText(RegisterActivity.this, "Your password cannot be empty", Toast.LENGTH_SHORT).show();
+                                        phoneNumberEdit.setText("");
+                                        Toast.makeText(RegisterActivity.this, "Your phone number is invalid", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                                 else {
                                     phoneNumberEdit.setText("");
-                                    Toast.makeText(RegisterActivity.this, "Your phone number is invalid", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterActivity.this, "Your phone number cannot contain a letter", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             else {
                                 phoneNumberEdit.setText("");
-                                Toast.makeText(RegisterActivity.this, "Your phone number cannot contain a letter", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Your phone number cannot be empty", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else {
-                            phoneNumberEdit.setText("");
-                            Toast.makeText(RegisterActivity.this, "Your phone number cannot be empty", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "National ID cannot contain a letter", Toast.LENGTH_SHORT).show();
                         }
 
 
@@ -159,59 +181,42 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    //class to post user data to the server
-    private class SaveUserTask extends UrlJsonAsyncTask {
-        //constructor
-        public SaveUserTask(Context context) {
-            super(context);
-        }
-
-        @Override
-        public JSONObject doInBackground(String... urls) {
-            JSONObject json = new JSONObject();
-            try {
-
-                URL url = new URL(REGISTER_USER_URL);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("POST");
-                urlConnection.setRequestProperty("Content-Type", "application/json");
-                urlConnection.setDoInput(true);
-                urlConnection.setDoOutput(true);
-
-                DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
-                //write the email and password to stream
-
-                //OutputStreamWriter writer = new OutputStreamWriter(out);
-//                String data = "{\"user\": {\"email\": \"" + email + "\"," +
-//                        " \"password\": \"" + password + "\", \"password_confirmation\": \"" + passwordConfirmation + "\"," +
-//                        " \"user_name\": \"" + username + "\"}}";
-                //wr.writeBytes(data);
-                wr.flush();
-                wr.close();
-                //writer.append("{\"user\": {\"email\": \"jack@gmail.com\", \"password\": \"jack123\", \"password_confirmation\": \"jack123\", \"user_name\": \"jack\"}}");
-                //writer.flush();
-                urlConnection.connect();
-
-                //read the response
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-                StringBuffer buffer = new StringBuffer();
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-                String line;
-
-                while((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
+    public void registerUser() {
+        StringRequest postRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response).getJSONObject("form");
+                            String site = jsonResponse.getString("site"),
+                                    network = jsonResponse.getString("network");
+                            System.out.println("Site: "+site+"\nNetwork: "+network);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
                 }
-
-                String response = buffer.toString();
-
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> params = new HashMap<>();
+                // the POST parameters:
+                params.put(KEY_FIRSTNAME, firstName);
+                params.put(KEY_LASTNAME, lastName);
+                params.put(KEY_IDNUMBER, nationalID);
+                params.put(KEY_PHONE, phoneNumber);
+                params.put(KEY_DOB, dob);
+                params.put(KEY_PASSWORD, password);
+                return params;
             }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            return json;
-        }
+        };
+        Volley.newRequestQueue(this).add(postRequest);
     }
 }
