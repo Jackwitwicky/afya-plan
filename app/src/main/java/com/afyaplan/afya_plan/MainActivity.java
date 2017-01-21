@@ -6,6 +6,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
     EditText firstname, lastname, phone, idNumber, dob, password;
     Button btn_register_user;
@@ -44,6 +56,44 @@ public class MainActivity extends AppCompatActivity {
         final String stringID = idNumber.getText().toString().trim();
         final String stringDob = dob.getText().toString().trim();
         final String stringPassword = password.getText().toString().trim();
+
+        //network call
+        StringRequest postRequest = new StringRequest(Request.Method.POST, REGISTER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response).getJSONObject("form");
+                            String site = jsonResponse.getString("site"),
+                                    network = jsonResponse.getString("network");
+                            System.out.println("Site: "+site+"\nNetwork: "+network);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<>();
+                // the POST parameters:
+                params.put(KEY_FIRSTNAME, stringFirstName);
+                params.put(KEY_LASTNAME, stringLastName);
+                params.put(KEY_PHONE, stringPhone);
+                params.put(KEY_IDNUMBER, stringID);
+                params.put(KEY_DOB, stringDob);
+                params.put(KEY_PASSWORD, stringPassword);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(postRequest);
     }
 
 }
