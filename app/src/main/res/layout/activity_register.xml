@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,69 +9,73 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FullName" />
-
-    <EditText
-        android:id="@+id/editTextFullName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Phone" />
-
-    <EditText
-        android:id="@+id/editTextPhone"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ID NUMBER" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FullName" />
 
-    <EditText
-        android:id="@+id/editTextId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/editTextFullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DOB" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone" />
 
-    <EditText
-        android:id="@+id/editTextDOB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/editTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID NUMBER" />
 
-    <EditText
-        android:id="@+id/editTextPassWord"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/editTextId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DOB" />
+
+        <EditText
+            android:id="@+id/editTextDOB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password" />
+
+        <EditText
+            android:id="@+id/editTextPassWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
-    <ProgressBar
-        android:id="@+id/progressBarRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible" />
+        <ProgressBar
+            android:id="@+id/progressBarRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
 
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register" />
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register" />
+    </LinearLayout>
 
-
-</LinearLayout>
+</ScrollView>

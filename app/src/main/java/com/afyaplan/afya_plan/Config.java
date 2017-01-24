@@ -6,7 +6,7 @@ package com.afyaplan.afya_plan;
 
 public class Config {
     //URL to our login.php file
-    public static final String LOGIN_URL = "http://10.0.2.2/afyaplanauthapp/Login.php";
+    public static final String LOGIN_URL = " http://ethy.co.ke/Afya-Plan/api/Login.php";
 
     //Keys for email and password as defined in our $_POST['key'] in login.php
     public static final String KEY_PHONE = "phone";

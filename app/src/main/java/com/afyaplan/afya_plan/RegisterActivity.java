@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String REGISTER_URL = "http://10.0.2.2/afyaplanauthapp/Register.php";
+    public static final String REGISTER_URL = " http://ethy.co.ke/Afya-Plan/api/Register.php";
     ProgressBar registerPb;
     public static final String KEY_FULLNAME = "fullname";
     public static final String KEY_PHONE = "phone";
