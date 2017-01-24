@@ -5,26 +5,31 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn_register_user;
-
+    Button login, register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        login = (Button) findViewById(R.id.btnLogin);
+        register = (Button) findViewById(R.id.btnRegister);
 
-        btn_register_user = (Button) findViewById(R.id.buttonRegister);
-        btn_register_user.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                //open register activity
-                Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+            public void onClick(View v) {
+                Intent loginIntent = new Intent(getApplicationContext(), Login.class);
+                startActivity(loginIntent);
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(registerIntent);
             }
         });
     }
-
 }
