@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- splash theme. -->
+    <style name="SplashAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
 </resources>
