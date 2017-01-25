@@ -1,5 +1,6 @@
 package com.afyaplan.afya_plan;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,6 +37,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText editTextdob;
     private EditText editTexPassword;
     private Button buttonRegister;
+    TextView linkLoginSignUp;
+    private static final int REQUEST_LOGIN = 0;
+
+    public boolean isValidated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,21 +51,81 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextFullName = (EditText) findViewById(R.id.editTextFullName);
         editTextPhone = (EditText) findViewById(R.id.editTextPhone);
         editTextId = (EditText) findViewById(R.id.editTextId);
-        editTextdob=(EditText)findViewById(R.id.editTextDOB);
-        editTexPassword=(EditText)findViewById(R.id.editTextPassWord);
+        editTextdob = (EditText) findViewById(R.id.editTextDOB);
+        editTexPassword = (EditText) findViewById(R.id.editTextPassWord);
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
 
         buttonRegister.setOnClickListener(this);
+        linkLoginSignUp = (TextView) findViewById(R.id.linkLoginSignUp);
+
+
+        linkLoginSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivityForResult(intent, REQUEST_LOGIN);
+            }
+        });
     }
 
 
     @Override
     public void onClick(View v) {
-        if (v == buttonRegister) {
+        isValidated = validate();
+        if (v == buttonRegister && isValidated) {
             RegisterAsync registerAsync = new RegisterAsync();
-
             registerAsync.execute();
+
+        } else {
+
+            isValidated = true;
         }
+    }
+
+
+    private boolean validate() {
+        boolean valid = true;
+        final String fullname = editTextFullName.getText().toString().trim();
+        final String phone = editTextPhone.getText().toString().trim();
+        final String id = editTextId.getText().toString().trim();
+        final String dob = editTextdob.getText().toString().trim();
+
+        final String password = editTexPassword.getText().toString();
+
+        if (fullname.isEmpty()) {
+            editTextFullName.setError("Cannot leave this blank!");
+            valid = false;
+        } else {
+            editTextFullName.setError(null);
+        }
+        if (phone.isEmpty() || phone.length() < 10 || phone.length() > 10) {
+            editTextPhone.setError("Invalid phone number!");
+            valid = false;
+        } else {
+            editTextPhone.setError(null);
+        }
+        if (id.isEmpty() || id.length() < 8 || id.length() > 8) {
+            editTextId.setError("Invalid id number!");
+            valid = false;
+        } else {
+            editTextId.setError(null);
+        }
+
+        if (dob.isEmpty()) {
+            editTextdob.setError("Cannot leave this blank!");
+            valid = false;
+        } else {
+            editTextdob.setError(null);
+        }
+
+        if (password.isEmpty() || password.length() <= 6) {
+            editTexPassword.setError("too short!");
+            valid = false;
+        } else {
+            editTexPassword.setError(null);
+        }
+
+        return valid;
     }
 
 
@@ -69,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final String id = editTextId.getText().toString().trim();
         final String dob = editTextdob.getText().toString().trim();
 
-        final String password=editTexPassword.getText().toString();
+        final String password = editTexPassword.getText().toString();
 
         @Override
         protected void onPreExecute() {

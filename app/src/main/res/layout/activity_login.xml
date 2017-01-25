@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-
+    android:background="@color/primary"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -15,10 +15,11 @@
         android:paddingTop="56dp">
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/ic_aspect_ratio_black_24dp" />
+            android:src="@drawable/ic_aspect_ratio_black_24dp"/>
 
         <ProgressBar
             android:id="@+id/progressBarLogin"
@@ -26,53 +27,55 @@
             android:layout_height="wrap_content"
             android:visibility="invisible" />
 
+        <!-- Phone Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
 
-            <EditText
-                android:id="@+id/editTextPhone"
+            <EditText android:id="@+id/editTextPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Phone"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:hint="Input phone number" />
+
         </android.support.design.widget.TextInputLayout>
 
+        <!--  Password Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
-
-            <EditText
-                android:id="@+id/editTextPassword"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
+
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/buttonLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
-            android:background="@color/colorPrimary"
+            android:layout_marginBottom="16dp"
             android:padding="12dp"
             android:text="Login"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/white"/>
 
         <TextView
             android:id="@+id/linkSignup"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
+            android:text="@string/signUpText"
             android:gravity="center"
-            android:text="No account yet? Create one"
-            android:textSize="16dip" />
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="@color/iron"/>
 
     </LinearLayout>
 </ScrollView>

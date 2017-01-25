@@ -10,6 +10,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -29,11 +30,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private EditText editTextPassword;
     private AppCompatButton buttonLogin;
     ProgressBar loginProgress;
+    TextView signUpLink;
+    private static final int REQUEST_SIGNUP = 0;
 
     //boolean variable to check user is logged in or not
     //initially it is false
     private boolean loggedIn = false;
 
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +49,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         buttonLogin = (AppCompatButton) findViewById(R.id.buttonLogin);
         loginProgress = (ProgressBar) findViewById(R.id.progressBarLogin);
+        signUpLink = (TextView) findViewById(R.id.linkSignup);
 
         //Adding click listener
         buttonLogin.setOnClickListener(this);
+
+        signUpLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivityForResult(intent, REQUEST_SIGNUP);
+            }
+        });
     }
 
     @Override
@@ -67,10 +80,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private void login() {
-
-
-    }
 
     @Override
     public void onClick(View v) {
