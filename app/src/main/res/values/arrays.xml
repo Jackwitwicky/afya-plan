@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="rate_array">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Two-Weeks</item>
+        <item>Monthly</item>
+    </string-array>
+</resources>

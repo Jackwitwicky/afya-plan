@@ -31,7 +31,8 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".IntroActivity"
-            android:theme="@style/SplashAppTheme"></activity>
+            android:theme="@style/SplashAppTheme" />
+        <activity android:name=".ChamaOptionsActivity"></activity>
     </application>
 
 </manifest>
