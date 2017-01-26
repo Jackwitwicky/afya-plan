@@ -37,7 +37,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     //initially it is false
     private boolean loggedIn = false;
 
-  
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
