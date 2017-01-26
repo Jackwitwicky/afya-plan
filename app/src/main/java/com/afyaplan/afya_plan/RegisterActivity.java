@@ -1,6 +1,10 @@
 package com.afyaplan.afya_plan;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private static final int REQUEST_LOGIN = 0;
 
     public boolean isValidated;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +77,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         isValidated = validate();
-        if (v == buttonRegister && isValidated) {
+        if (v == buttonRegister && isValidated && isOnline()) {
+            progressDialog = new ProgressDialog(RegisterActivity.this,
+                    R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Creating Account...");
             RegisterAsync registerAsync = new RegisterAsync();
             registerAsync.execute();
 
         } else {
 
             isValidated = true;
+            Toast.makeText(this, "Network isn't available", Toast.LENGTH_LONG).show();
         }
     }
 
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private boolean validate() {
         boolean valid = true;
@@ -139,8 +159,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected void onPreExecute() {
-            registerPb.setVisibility(View.VISIBLE);
-            super.onPreExecute();
+            progressDialog.show();
         }
 
         @Override
@@ -184,8 +203,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected void onPostExecute(String s) {
-
-            registerPb.setVisibility(View.INVISIBLE);
+            progressDialog.dismiss();
         }
     }
 }
