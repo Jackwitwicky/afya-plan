@@ -79,6 +79,7 @@ public class IntroActivity extends MaterialIntroActivity {
         super.onFinish();
         Intent loginintent = new Intent(IntroActivity.this, Login.class);
         startActivity(loginintent);
+        finish();
     }
 
 

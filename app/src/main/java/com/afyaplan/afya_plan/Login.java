@@ -3,6 +3,8 @@ package com.afyaplan.afya_plan;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +38,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     //boolean variable to check user is logged in or not
     //initially it is false
     private boolean loggedIn = false;
+
+    //strings to hold entered phone and password
+    private String phone;
+    private String password;
 
 
     @Override
@@ -83,17 +89,72 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        //Calling the login async function
-        LoginAsync loginAsync = new LoginAsync();
-        loginAsync.execute();
+
+        //Getting values from edit texts
+        phone = editTextPhone.getText().toString().trim();
+        password = editTextPassword.getText().toString().trim();
+
+        //check if values are good
+        if(validate(phone, password)) {
+            //check if connected
+            if(isOnline()) {
+                //Calling the login async function
+                LoginAsync loginAsync = new LoginAsync();
+                loginAsync.execute();
+            }
+            else {
+                Toast.makeText(Login.this,
+                        "You are offline. Enable data to proceed", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+
+    //validate entered fields
+    public boolean validate(String phone, String password) {
+        boolean isValidated = true;
+
+        //check if phone is empty
+        if(phone == null || phone.isEmpty()) {
+            isValidated = false;
+            editTextPhone.setError("Cannot leave this blank!");
+        }
+        else {
+            editTextPhone.setError(null);
+        }
+        //check phone is correct length
+        if(phone.length() != 10) {
+            isValidated = false;
+            editTextPhone.setError("Invalid phone number");
+        }
+        else {
+            editTextPhone.setError(null);
+        }
+        //check password is not blank
+        if(password == null || password.isEmpty()) {
+            isValidated = false;
+            editTextPassword.setError("Cannot leave this blank!");
+        }
+        else {
+            editTextPassword.setError(null);
+        }
+
+        return isValidated;
+    }
+
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
     private class LoginAsync extends AsyncTask<String, String, String> {
 
-        //Getting values from edit texts
-        final String phone = editTextPhone.getText().toString().trim();
-        final String password = editTextPassword.getText().toString().trim();
 
         @Override
         protected void onPreExecute() {
@@ -127,6 +188,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 //Starting profile activity
                                 Intent intent = new Intent(Login.this, Welcome.class);
                                 startActivity(intent);
+                                finish();
                             } else {
                                 //If the server response is not success
                                 //Displaying an error message on toast

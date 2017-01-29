@@ -59,6 +59,7 @@ public class Welcome extends AppCompatActivity {
                         //Starting login activity
                         Intent intent = new Intent(Welcome.this, Login.class);
                         startActivity(intent);
+                        finish();
                     }
                 });
 
