@@ -77,19 +77,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         isValidated = validate();
-        if (v == buttonRegister && isValidated && isOnline()) {
-            progressDialog = new ProgressDialog(RegisterActivity.this,
-                    R.style.AppTheme_Dark_Dialog);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setCancelable(false);
-            progressDialog.setMessage("Creating Account...");
-            RegisterAsync registerAsync = new RegisterAsync();
-            registerAsync.execute();
+        if (v == buttonRegister && isValidated) {
+            if(isOnline()) {
+                progressDialog = new ProgressDialog(RegisterActivity.this,
+                        R.style.AppTheme_Dark_Dialog);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setCancelable(false);
+                progressDialog.setMessage("Creating Account...");
+                RegisterAsync registerAsync = new RegisterAsync();
+                registerAsync.execute();
+            }
+            else {
+                isValidated = true;
+                Toast.makeText(this, "Network isn't available", Toast.LENGTH_LONG).show();
+            }
 
-        } else {
 
-            isValidated = true;
-            Toast.makeText(this, "Network isn't available", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -169,6 +172,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         @Override
                         public void onResponse(String response) {
                             Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_LONG).show();
+
+                            //start chama options activity
+                            Intent chamaOptions = new Intent(RegisterActivity.this,
+                                    ChamaOptionsActivity.class);
+                            startActivity(chamaOptions);
+                            finish();
                         }
                     },
                     new Response.ErrorListener() {

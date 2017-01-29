@@ -186,7 +186,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 editor.commit();
 
                                 //Starting profile activity
-                                Intent intent = new Intent(Login.this, Welcome.class);
+                                Intent intent = new Intent(Login.this, ChamaOptionsActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {
