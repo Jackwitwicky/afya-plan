@@ -22,9 +22,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.digits.sdk.android.AuthCallback;
+import com.digits.sdk.android.AuthConfig;
+import com.digits.sdk.android.Digits;
+import com.digits.sdk.android.DigitsException;
+import com.digits.sdk.android.DigitsSession;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.fabric.sdk.android.Fabric;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
     //Defining views
@@ -43,11 +52,46 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private String phone;
     private String password;
 
+    private AuthCallback authCallback;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        TwitterAuthConfig authConfig =  new TwitterAuthConfig(Config.TWITTER_KEY, Config.TWITTER_SECRET);
+        Fabric.with(this, new TwitterCore(authConfig), new Digits.Builder().build());
+        authCallback = new AuthCallback() {
+            @Override
+            public void success(DigitsSession session, String phoneNumber) {
+                // Do something with the session
+                //Creating a shared preference
+                SharedPreferences sharedPreferences = Login.this.getSharedPreferences(
+                        Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+                //Creating editor to store values to shared preferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                //Adding values to editor
+                editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, true);
+                editor.putString(Config.PHONE_SHARED_PREF, phone);
+
+                //Saving values to editor
+                editor.commit();
+
+                //Starting profile activity
+                Intent intent = new Intent(Login.this, ChamaOptionsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void failure(DigitsException exception) {
+                // Do something on failure
+                Toast.makeText(Login.this, "Could not verify this user" , Toast.LENGTH_SHORT).show();
+            }
+        };
 
         //Initializing views
         editTextPhone = (EditText) findViewById(R.id.editTextPhone);
@@ -172,23 +216,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         public void onResponse(String response) {
                             //If we are getting success from server
                             if (response.equalsIgnoreCase(Config.LOGIN_SUCCESS)) {
-                                //Creating a shared preference
-                                SharedPreferences sharedPreferences = Login.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-                                //Creating editor to store values to shared preferences
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                String tempPhone = phone.substring(1, phone.length());
 
-                                //Adding values to editor
-                                editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, true);
-                                editor.putString(Config.PHONE_SHARED_PREF, phone);
+                                AuthConfig.Builder authConfigBuilder = new AuthConfig.Builder()
+                                        .withAuthCallBack(authCallback)
+                                        .withPhoneNumber("+254" + tempPhone);
 
-                                //Saving values to editor
-                                editor.commit();
-
-                                //Starting profile activity
-                                Intent intent = new Intent(Login.this, ChamaOptionsActivity.class);
-                                startActivity(intent);
-                                finish();
+                                Digits.authenticate(authConfigBuilder.build());
+//
                             } else {
                                 //If the server response is not success
                                 //Displaying an error message on toast

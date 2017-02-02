@@ -24,4 +24,8 @@ public class Config {
 
     //We will use this to store the boolean in sharedpreference to track user is loggedin or not
     public static final String LOGGEDIN_SHARED_PREF = "loggedin";
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    public static final String TWITTER_KEY = "HMBD9lbejDkFtutX35X9TMMAu";
+    public static final String TWITTER_SECRET = "qrK7hKcQXsG7Hk2ObjZ41Etcg5nakgxhqCxrf308H8yWSZ6tqP";
 }

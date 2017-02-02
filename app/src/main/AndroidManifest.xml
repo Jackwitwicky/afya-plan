@@ -33,6 +33,11 @@
             android:name=".IntroActivity"
             android:theme="@style/SplashAppTheme" />
         <activity android:name=".ChamaOptionsActivity"></activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="aaaee475dbeb95576c83564bed73019d5ad1551d"
+            />
     </application>
 
 </manifest>
