@@ -1,1 +1,1 @@
-include ':app', ':ParticleView', ':material-intro-screen'
+include ':app', ':ParticleView', ':material-intro-screen', ':library'

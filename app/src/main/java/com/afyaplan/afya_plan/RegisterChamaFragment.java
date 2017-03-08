@@ -2,10 +2,8 @@ package com.afyaplan.afya_plan;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -34,7 +31,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisterChamaFragment extends DialogFragment implements View.OnClickListener {
+public class RegisterChamaFragment extends DialogFragment {
 
     private static final String REGISTER_CHAMA_URL = "";
 
@@ -46,8 +43,7 @@ public class RegisterChamaFragment extends DialogFragment implements View.OnClic
     private EditText chamaNameEdit;
     private EditText chamaAmountEdit;
     private Spinner contributionRateSpinner;
-    Button dialogCancel;
-    Button dialogRegister;
+
 
     private String chamaName;
     private String chamaAmount;
@@ -97,11 +93,7 @@ public class RegisterChamaFragment extends DialogFragment implements View.OnClic
                 view.findViewById(R.id.chamaAmountEdit);
         contributionRateSpinner = (Spinner)
                 view.findViewById(R.id.contributionRateSpinner);
-        dialogRegister = (Button) view.findViewById(R.id.dialogRegister);
-        dialogCancel = (Button) view.findViewById(R.id.dialogCancel);
 
-        dialogCancel.setOnClickListener(this);
-        dialogRegister.setOnClickListener(this);
 
 
         // Fetch arguments from bundle and set title
@@ -120,34 +112,7 @@ public class RegisterChamaFragment extends DialogFragment implements View.OnClic
 
     }
 
-    public void onClick(View view) {
-        int viewID = view.getId();
 
-        if(viewID == R.id.dialogCancel) {
-            dismiss();
-        }
-        else if(viewID == R.id.dialogRegister) {
-            //register the chama
-            if(validate()) {
-                if(isOnline()) {
-                    progressDialog = new ProgressDialog(getActivity(),
-                            R.style.AppTheme_Dark_Dialog);
-                    progressDialog.setIndeterminate(true);
-                    progressDialog.setCancelable(false);
-                    progressDialog.setMessage("Creating Your Chama...");
-
-                    RegisterChamaAsync chamaAsync = new RegisterChamaAsync();
-                    chamaAsync.execute();
-                }
-                else {
-                    Toast.makeText(getActivity(),
-                            "You are offline. Enable data to proceed", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        }
-    }
 
     protected boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);

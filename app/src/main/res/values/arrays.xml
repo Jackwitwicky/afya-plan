@@ -6,4 +6,41 @@
         <item>Two-Weeks</item>
         <item>Monthly</item>
     </string-array>
+
+    <array name="names">
+        <item>David Pizarro</item>
+        <item>Manuel García Varés</item>
+        <item>Eduardo Centeno</item>
+        <item>Tylos</item>
+        <item>Elisa Pastor</item>
+        <item>Lurecas</item>
+        <item>Carlos Romero</item>
+        <item>JAMM</item>
+        <item>Juan Carlos Domínguez</item>
+        <item>Pablo Domínguez</item>
+    </array>
+    <integer-array name="ages">
+        <item>0714500453</item>
+        <item>0712345776</item>
+        <item>0712345746</item>
+        <item>0714500453</item>
+        <item>0712345776</item>
+        <item>0712345746</item>
+        <item>0712345746</item>
+        <item>0712345776</item>
+        <item>0712345746</item>
+        <item>0712345746</item>
+    </integer-array>
+    <string-array name="photos">
+        <item>@drawable/pizarro</item>
+        <item>@drawable/manu</item>
+        <item>@drawable/edu</item>
+        <item>@drawable/tylos</item>
+        <item>@drawable/elisa</item>
+        <item>@drawable/lurecas</item>
+        <item>@drawable/romero</item>
+        <item>@drawable/jamm</item>
+        <item>@drawable/juanqui</item>
+        <item>@drawable/pablo</item>
+    </string-array>
 </resources>

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.afyaplan.afya_plan"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -24,9 +24,14 @@ dependencies {
     compile project(':ParticleView')
     compile project(':material-intro-screen')
     compile files('libs/volley.jar')
+    compile project(':library')
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:cardview-v7:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.github.Yalantis:SearchFilter:v1.0.2'
+    compile 'com.facebook.fresco:fresco:0.13.0'
     testCompile 'junit:junit:4.12'
     compile('com.digits.sdk.android:digits:2.0.5@aar') {
         transitive = true;

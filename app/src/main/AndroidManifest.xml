@@ -32,12 +32,17 @@
         <activity
             android:name=".IntroActivity"
             android:theme="@style/SplashAppTheme" />
-        <activity android:name=".ChamaOptionsActivity"></activity>
+        <activity android:name=".ChamaOptionsActivity" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="aaaee475dbeb95576c83564bed73019d5ad1551d"
-            />
+            android:value="aaaee475dbeb95576c83564bed73019d5ad1551d" />
+
+        <activity
+            android:name=".BrowseChama"
+            android:theme="@style/SplashAppTheme" />
+        <activity android:name=".InviteMembers"
+            android:theme="@style/SplashAppTheme"></activity>
     </application>
 
 </manifest>
