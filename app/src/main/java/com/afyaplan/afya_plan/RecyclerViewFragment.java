@@ -3,9 +3,15 @@ package com.afyaplan.afya_plan;
 import com.dpizarro.autolabel.library.AutoLabelUI;
 import com.dpizarro.autolabel.library.Label;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.res.TypedArray;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -15,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -122,14 +130,9 @@ public class RecyclerViewFragment extends Fragment {
         mPersonList = new ArrayList<>();
 
         //Populate list
-        List<String> names = Arrays.asList(getResources().getStringArray(R.array.names));
-        int [] ages = getResources().getIntArray(R.array.ages);
+        getAllContacts();
         //List<Integer> agesList = new ArrayList<Integer>(Arrays.asList(ages));
         TypedArray photos = getResources().obtainTypedArray(R.array.photos);
-
-        for (int i = 0; i < names.size(); i++) {
-            mPersonList.add(new Person(names.get(i), Integer.toString(ages[i]), photos.getResourceId(i, -1), false));
-        }
 
         photos.recycle();
 
@@ -142,6 +145,78 @@ public class RecyclerViewFragment extends Fragment {
                 itemListClicked(position);
             }
         });
+    }
+
+    private void getAllContacts() {
+        Person person;
+
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        Cursor cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null,
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
+
+        if( cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                int hasPhoneNumber = Integer.parseInt(cursor.getString(
+                        cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.HAS_PHONE_NUMBER)));
+
+                //check if user has a phone number
+                if(hasPhoneNumber > 0) {
+                    String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                    String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    String phoneNumber = "12345678";
+
+                    Cursor phoneCursor = contentResolver.query(
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[] {id},
+                            null);
+                    if (phoneCursor.moveToNext()) {
+                        phoneNumber = phoneCursor.getString(
+                                phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    }
+
+                    phoneCursor.close();
+                    person = new Person(name, phoneNumber, getPhoto(id), false);
+
+                    mPersonList.add(person);
+                }
+            }
+        }
+    }
+
+    //get contact photo of particular person
+
+    private Bitmap getPhoto(String id) {
+        Bitmap photo = null;
+
+        try {
+
+            InputStream input =
+                    ContactsContract.Contacts.openContactPhotoInputStream (
+                            getActivity().getContentResolver(),
+                            ContentUris.withAppendedId(
+                                    ContactsContract.Contacts.CONTENT_URI,
+                                    new Long(id).longValue()));
+
+            if (input != null) {
+                photo = BitmapFactory.decodeStream(input);
+                input.close();
+            }
+            else {
+                photo = BitmapFactory.decodeResource(getActivity().getResources(),
+                        R.drawable.account_box);
+            }
+
+
+
+        }
+
+        catch (IOException iox) {
+            iox.printStackTrace();
+        }
+
+        return photo;
     }
 
     @Override

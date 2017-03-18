@@ -34,7 +34,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Pe
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
         personViewHolder.personName.setText(people.get(i).name);
         personViewHolder.personAge.setText(people.get(i).age);
-        personViewHolder.personPhoto.setImageResource(people.get(i).photoId);
+        personViewHolder.personPhoto.setImageBitmap(people.get(i).photo);
         personViewHolder.cbSelected.setChecked(people.get(i).isSelected());
 
     }

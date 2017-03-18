@@ -1,5 +1,6 @@
 package com.afyaplan.afya_plan;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,13 +11,13 @@ public class Person implements Parcelable {
 
     String name;
     String age;
-    int photoId;
+    Bitmap photo;
     private boolean selected;
 
-    public Person(String name, String age, int photoId, boolean selected) {
+    public Person(String name, String age, Bitmap photo, boolean selected) {
         this.name = name;
         this.age = age;
-        this.photoId = photoId;
+        this.photo = photo;
         this.selected = selected;
     }
 
@@ -44,12 +45,12 @@ public class Person implements Parcelable {
         this.age = age;
     }
 
-    public int getPhotoId() {
-        return photoId;
+    public Bitmap getPhoto() {
+        return photo;
     }
 
-    public void setPhotoId(int photoId) {
-        this.photoId = photoId;
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
     }
 
     @Override
@@ -61,14 +62,14 @@ public class Person implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
         dest.writeString(this.age);
-        dest.writeInt(this.photoId);
+        dest.writeValue(this.photo);
         dest.writeByte(selected ? (byte) 1 : (byte) 0);
     }
 
     private Person(Parcel in) {
         this.name = in.readString();
         this.age = in.readString();
-        this.photoId = in.readInt();
+        this.photo = (Bitmap) in.readValue(getClass().getClassLoader());
         this.selected = in.readByte() != 0;
     }
 
