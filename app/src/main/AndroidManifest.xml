@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -41,8 +43,11 @@
         <activity
             android:name=".BrowseChama"
             android:theme="@style/SplashAppTheme" />
-        <activity android:name=".InviteMembers"
-            android:theme="@style/SplashAppTheme"></activity>
+        <activity
+            android:name=".InviteMembers"
+            android:theme="@style/SplashAppTheme" />
+        <activity android:name=".MainBoard"></activity>
+        <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService"/>
     </application>
 
 </manifest>

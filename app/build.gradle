@@ -32,6 +32,11 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.github.Yalantis:SearchFilter:v1.0.2'
     compile 'com.facebook.fresco:fresco:0.13.0'
+    compile 'com.ss.bottomnavigation:bottomnavigation:1.4.2'
+    compile 'com.pkmmte.view:circularimageview:1.1'
+    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.2.0-beta.4@aar'){
+        transitive=true
+    }
     testCompile 'junit:junit:4.12'
     compile('com.digits.sdk.android:digits:2.0.5@aar') {
         transitive = true;

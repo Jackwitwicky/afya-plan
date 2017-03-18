@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:background="#fff"
+        android:elevation="6dp"
+        card_view:cardCornerRadius="6dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:text="DevOps Chama"
+                android:textColor="#222"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:text="You Are Supposed to Contribute:100ksh "
+                android:textColor="#666"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contr"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:text="DEADLINE"
+                android:textColor="#666"
+                android:textSize="18dp"
+                android:textStyle="bold|italic" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contr"
+                android:layout_marginLeft="130dp"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:text="12/6/2016"
+                android:textColor="#666"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/loan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/date"
+                android:maxLines="3"
+                android:padding="8dp"
+
+                android:text="LOAN"
+                android:textColor="#666"
+                android:textSize="18dp"
+                android:textStyle="bold|italic" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contr"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="30dp"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:text="Currently You Are Loan Free"
+                android:textColor="#666"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="150dp"
+                android:src="@drawable/logo" />
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

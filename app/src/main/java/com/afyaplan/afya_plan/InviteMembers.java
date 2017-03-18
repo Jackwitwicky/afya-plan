@@ -1,6 +1,7 @@
 package com.afyaplan.afya_plan;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -57,6 +58,8 @@ public class InviteMembers extends AppCompatActivity {
                             Thread.sleep(2000);
                             if (progressDialog.isShowing())
                                 progressDialog.dismiss();
+                            Intent mainBoardIntent=new Intent(getApplicationContext(),MainBoard.class);
+                            startActivity(mainBoardIntent);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
