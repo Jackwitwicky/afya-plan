@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 public class InviteMembers extends AppCompatActivity {
     private Toolbar toolbar;
+    private String chamaName = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,8 @@ public class InviteMembers extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         RecyclerViewFragment.newInstance();
+
+        chamaName = getIntent().getStringExtra("CHAMA_NAME");
 
     }
 
@@ -40,7 +44,7 @@ public class InviteMembers extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_invite) {
-            Toast.makeText(this, "Invited", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Inviting", Toast.LENGTH_SHORT).show();
 
 
 
@@ -59,6 +63,7 @@ public class InviteMembers extends AppCompatActivity {
                             if (progressDialog.isShowing())
                                 progressDialog.dismiss();
                             Intent mainBoardIntent=new Intent(getApplicationContext(),MainBoard.class);
+                            mainBoardIntent.putExtra("CHAMA_NAME", chamaName);
                             startActivity(mainBoardIntent);
                         } catch (InterruptedException e) {
                             e.printStackTrace();

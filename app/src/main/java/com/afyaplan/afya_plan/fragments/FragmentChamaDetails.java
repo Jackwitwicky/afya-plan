@@ -1,11 +1,16 @@
 package com.afyaplan.afya_plan.fragments;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.afyaplan.afya_plan.R;
@@ -35,6 +40,13 @@ public class FragmentChamaDetails extends Fragment {
         View v = inflater.inflate(R.layout.fragment_fragment_chama_details, container, false);
 
 
+        TextView chamaTitleView = (TextView) v.findViewById(R.id.title);
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String defaultValue = "Afya Chama";
+        String chamaName = sharedPref.getString("CHAMA_NAME", defaultValue);
+
+        chamaTitleView.setText(chamaName);
 
         // Mapbox access token is configured here. This needs to be called either in your application
         // object or in the same activity which contains the mapview.

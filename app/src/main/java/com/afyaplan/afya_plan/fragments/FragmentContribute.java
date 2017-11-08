@@ -1,9 +1,13 @@
 package com.afyaplan.afya_plan.fragments;
 
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.afyaplan.afya_plan.ChamaOptionsActivity;
+import com.afyaplan.afya_plan.InviteMembers;
 import com.afyaplan.afya_plan.R;
 
 import java.io.BufferedReader;
@@ -66,13 +72,36 @@ public class FragmentContribute extends Fragment {
                 txt_phone = phone.getText().toString();
 
                 if (!txt_phone.equals("") && !txt_amount.equals("")) {
-                    try {
-                        //String response = GetText(txt_amount, txt_phone);
-                        new RetrieveFeedTask().execute();
-                        // Toast.makeText(getApplicationContext(), "Heheh", Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
+//                    try {
+//                        //String response = GetText(txt_amount, txt_phone);
+//                        new RetrieveFeedTask().execute();
+//                        // Toast.makeText(getApplicationContext(), "Heheh", Toast.LENGTH_SHORT).show();
+//                    } catch (Exception e) {
+//
+//                    }
 
-                    }
+                    final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                            R.style.AppTheme_Dark_Dialog);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setMessage("Sending Contribution...");
+                    progressDialog.show();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //open the welcome activity
+                            //start chama options activity
+                            progressDialog.dismiss();
+
+                            Toast.makeText(getActivity(), "Contribution has been sent to your chama",
+                                    Toast.LENGTH_SHORT).show();
+
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.frame_fragment_containers, new FragmentChamaDetails());
+                            transaction.commit();
+                        }
+                    }, 2500);
                 } else {
                     Toast.makeText(v.getContext(), "Both fields must be filled", Toast.LENGTH_SHORT).show();
 

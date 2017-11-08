@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,6 +8,40 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Request" />
+        android:text="Loan Request"
+        android:textSize="26sp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="16dp"/>
 
-</FrameLayout>
+
+    <TextView
+        android:id="@+id/requestPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter amount you would wish to request"
+        android:textSize="16sp"
+        android:layout_marginTop="70dp"
+        android:paddingLeft="16dp"/>
+
+
+    <EditText
+        android:id="@+id/requestEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/requestPrompt"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="2000"
+        android:inputType="number"
+        android:paddingLeft="10dp"/>
+
+    <Button
+        android:id="@+id/requestButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Request"
+        android:layout_below="@id/requestEditText"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"/>
+</RelativeLayout>

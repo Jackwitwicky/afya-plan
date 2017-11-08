@@ -141,15 +141,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         //check if values are good
         if(validate(phone, password)) {
             //check if connected
-            if(isOnline()) {
-                //Calling the login async function
-                LoginAsync loginAsync = new LoginAsync();
-                loginAsync.execute();
-            }
-            else {
-                Toast.makeText(Login.this,
-                        "You are offline. Enable data to proceed", Toast.LENGTH_SHORT).show();
-            }
+//            if(isOnline()) {
+//                //Calling the login async function
+//                LoginAsync loginAsync = new LoginAsync();
+//                loginAsync.execute();
+//            }
+//            else {
+//                Toast.makeText(Login.this,
+//                        "You are offline. Enable data to proceed", Toast.LENGTH_SHORT).show();
+//            }
+
+            Intent intent = new Intent(Login.this, ChamaOptionsActivity.class);
+            startActivity(intent);
+            finish();
 
         }
     }

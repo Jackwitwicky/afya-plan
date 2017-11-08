@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Afya-Plan.iml" filepath="$PROJECT_DIR$/Afya-Plan.iml" />
       <module fileurl="file://$PROJECT_DIR$/ParticleView/ParticleView.iml" filepath="$PROJECT_DIR$/ParticleView/ParticleView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/afyaplanapp.iml" filepath="$PROJECT_DIR$/afyaplanapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/material-intro-screen/material-intro-screen.iml" filepath="$PROJECT_DIR$/material-intro-screen/material-intro-screen.iml" />

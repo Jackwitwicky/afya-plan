@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="15dp"
-    android:layout_marginRight="25dp"
-    android:layout_marginLeft="35dp">
-
+    android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/chamaNameEdit"
+        android:id="@+id/invitationCodeEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Chama Name"
-        android:paddingLeft="16dp"/>
+        android:hint="128394"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:inputType="number"/>
 
 </LinearLayout>

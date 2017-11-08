@@ -60,7 +60,7 @@
                 android:layout_marginLeft="130dp"
                 android:maxLines="3"
                 android:padding="8dp"
-                android:text="12/6/2016"
+                android:text="None"
                 android:textColor="#666"
                 android:textSize="18dp"
                 android:textStyle="bold" />

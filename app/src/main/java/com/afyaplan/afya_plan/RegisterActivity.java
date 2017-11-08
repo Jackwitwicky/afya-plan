@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -78,19 +79,36 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         isValidated = validate();
         if (v == buttonRegister && isValidated) {
-            if(isOnline()) {
-                progressDialog = new ProgressDialog(RegisterActivity.this,
+            progressDialog = new ProgressDialog(RegisterActivity.this,
                         R.style.AppTheme_Dark_Dialog);
                 progressDialog.setIndeterminate(true);
                 progressDialog.setCancelable(false);
                 progressDialog.setMessage("Creating Account...");
-                RegisterAsync registerAsync = new RegisterAsync();
-                registerAsync.execute();
-            }
-            else {
-                isValidated = true;
-                Toast.makeText(this, "Network isn't available", Toast.LENGTH_LONG).show();
-            }
+            progressDialog.show();
+//            if(isOnline()) {
+//                RegisterAsync registerAsync = new RegisterAsync();
+//                registerAsync.execute();
+//            }
+//            else {
+//                isValidated = true;
+//                Toast.makeText(this, "Network isn't available", Toast.LENGTH_LONG).show();
+//            }
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //open the welcome activity
+                    //start chama options activity
+                    progressDialog.dismiss();
+                    Intent chamaOptions = new Intent(RegisterActivity.this,
+                            ChamaOptionsActivity.class);
+                    startActivity(chamaOptions);
+                    finish();
+
+                    Toast.makeText(RegisterActivity.this, "Your account has been created successfully",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }, 4000);
 
 
         }
